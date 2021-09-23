@@ -22,39 +22,55 @@ Node* BST::MakeBST(std::vector<int> list)
 		left.push_back(list[i]);
 		right.push_back(list[i+HalfSize+1]);
 	}
-	Root = new Node(Key, MakeBST(left), MakeBST(right));
+	Root = new Node(Key, MakeBST(left), MakeBST(right), Root);
 	return Root;
 }
 
-int BST::FindKth(int k, Node* Node, bool SolFound)
+int BST::FindKth(int k, Node* node, bool SolFound)
 {
+	node->Parent = node;
 	int count = 0;
-	int key = 0;
-	if (k == count)
+	int Key = 0;
+	Node NodeToDelete = Node();
+	while (!SolFound)
 	{
-		SolFound = true;
-		key = Node->Key;
-		return key;
-	}
-	if (Node == nullptr)
-	{
-		return 0;
-	}
-	if (Node != nullptr)
-	{
-		++count;
-		FindKth(k, Node->Left);
-		if (SolFound)
+		if (node->Left == nullptr && node->Right == nullptr)
 		{
-			return key;
+			NodeToDelete = *node;
+			node = node->Parent;
+			if (NodeToDelete.Key == node->Left->Key)
+			{
+				node->Left = nullptr;
+				++count;
+				if (count == k)
+				{
+					Key = node->Key;
+					SolFound = true;
+				}
+				node = Root;
+			}
+			if (NodeToDelete.Key == node->Right->Key)
+			{
+				node->Right = nullptr;
+				++count;
+				if (count == k)
+				{
+					Key = node->Key;
+					SolFound = true;
+				}
+				node = Root;
+			}
 		}
-		++count;
-		FindKth(k, Node->Right);
-		if (SolFound)
+		else if (node->Left != nullptr)
 		{
-			return key;
+			node = node->Left;
+		}
+		else if (node->Right != nullptr)
+		{
+			node = node->Right;
 		}
 	}
+	return Key;
 }
 
 void BST::PrintBST(Node* Node)

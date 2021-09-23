@@ -1,1 +1,2 @@
 C:\Users\vilif\source\repos\BST\Debug\BST.exe
+C:\Users\vilif\Documents\GitHub\BST\Debug\BST.exe

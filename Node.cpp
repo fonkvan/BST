@@ -7,9 +7,10 @@ Node::Node()
 	Right = nullptr;
 }
 
-Node::Node(int Key, Node* Left, Node* Right)
+Node::Node(int Key, Node* Left, Node* Right, Node* Parent)
 {
 	this->Key = Key;
 	this->Left = Left;
 	this->Right = Right;
+	this->Parent = Parent;
 }

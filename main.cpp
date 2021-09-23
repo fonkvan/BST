@@ -10,5 +10,6 @@ int main()
 	bst.MakeBST(list);
 	//bst.PrintBST(bst.Root);
 	int k = bst.FindKth(4, bst.Root);
+	std::cout << "Correct number is 45" << std::endl;
 	std::cout << "4th element is " << k << std::endl;
 }
