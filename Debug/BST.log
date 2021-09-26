@@ -1,2 +1,6 @@
 ﻿  BST.cpp
+  main.cpp
+  Node.cpp
+  Generating Code...
+C:\Users\vilif\Documents\GitHub\BST\BST.cpp(44): warning C4715: 'BST::FindKth': not all control paths return a value
   BST.vcxproj -> C:\Users\vilif\Documents\GitHub\BST\Debug\BST.exe

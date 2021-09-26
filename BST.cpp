@@ -7,6 +7,7 @@ BST::BST()
 	Root = nullptr;
 }
 
+//this initializes the tree
 Node* BST::MakeBST(std::vector<int> list)
 {
 	std::vector<int> left;
@@ -26,60 +27,51 @@ Node* BST::MakeBST(std::vector<int> list)
 	return Root;
 }
 
-int BST::FindKth(int k, Node* node, bool SolFound)
+//I was struggling to find the kth element through the tree itself, so I ended up making a stack here
+int BST::FindKth(int k)
 {
-	node->Parent = node;
-	int count = 0;
-	int Key = 0;
-	Node NodeToDelete = Node();
-	while (!SolFound)
+	MakeStack(Root);
+	int Sol = 0;
+	while (!Nodes.empty())
 	{
-		if (node->Left == nullptr && node->Right == nullptr)
+		if (Nodes.size() == k)
 		{
-			NodeToDelete = *node;
-			node = node->Parent;
-			if (NodeToDelete.Key == node->Left->Key)
-			{
-				node->Left = nullptr;
-				++count;
-				if (count == k)
-				{
-					Key = node->Key;
-					SolFound = true;
-				}
-				node = Root;
-			}
-			if (NodeToDelete.Key == node->Right->Key)
-			{
-				node->Right = nullptr;
-				++count;
-				if (count == k)
-				{
-					Key = node->Key;
-					SolFound = true;
-				}
-				node = Root;
-			}
+			Sol = Nodes.top()->Key;
+			return Sol;
 		}
-		else if (node->Left != nullptr)
-		{
-			node = node->Left;
-		}
-		else if (node->Right != nullptr)
-		{
-			node = node->Right;
-		}
+		Nodes.pop();
 	}
-	return Key;
 }
 
-void BST::PrintBST(Node* Node)
+//I originally wanted to print it vertically, and was able to just not in the right order
+//so i went with a method to print the tree horizontally, pretty much just changes
+//the amount of spaces before the number at each depth to give it the tree like effect
+void BST::PrintBST(Node* Node, int spaces)
 {
 	if (Node == nullptr)
 	{
 		return;
 	}
-	PrintBST(Node->Left);
+	spaces = spaces<<1;
+	PrintBST(Node->Right, spaces);
+	int count = spaces;
+	while (count != 0)
+	{
+		std::cout << " ";
+		--count;
+	}
 	std::cout << Node->Key << std::endl;
-	PrintBST(Node->Right);
+	PrintBST(Node->Left, spaces);
+}
+
+//Makes stack using in order traversal
+void BST::MakeStack(Node* node)
+{
+	if (node == nullptr)
+	{
+		return;
+	}
+	MakeStack(node->Left);
+	Nodes.push(node);
+	MakeStack(node->Right);
 }

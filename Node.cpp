@@ -5,6 +5,7 @@ Node::Node()
 	Key = 0;
 	Left = nullptr;
 	Right = nullptr;
+	Parent = nullptr;
 }
 
 Node::Node(int Key, Node* Left, Node* Right, Node* Parent)
